@@ -1,4 +1,6 @@
-#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -11,7 +13,7 @@ void printShaderLog(unsigned int shader) {
     if (len > 0) {
         log = (char *)malloc(len);
         glGetShaderInfoLog(shader, len, &chWrittn, log);
-        std::cout << "Shader info log: " << log << std::endl;
+        printf("Shader info log: %s\n", log);
         free(log);
     }
 }
@@ -23,8 +25,8 @@ void printProgramLog(int prog) {
     glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &len);
     if (len > 0) {
         log = (char *)malloc(len);
-         glGetProgramInfoLog(prog, len, &chWrittn, log);
-         std::cout << "Program Info Log: " << log << std::endl;
+        glGetProgramInfoLog(prog, len, &chWrittn, log);
+        printf("Program Info log: %s\n", log);
         free(log);
     } 
 }
@@ -33,9 +35,9 @@ bool checkOpenGLError() {
     bool foundError = false;
     int glErr = glGetError();
     while (glErr != GL_NO_ERROR) {
-        std::cout << "glError: " << glErr << std::endl;
-         foundError = true;
-         glErr = glGetError();
+        printf("glError: %d\n", glErr);
+        foundError = true;
+        glErr = glGetError();
     }
     return foundError;
 }
@@ -63,14 +65,14 @@ unsigned int createShaderSource() {
     unsigned int vShader = glCreateShader(GL_VERTEX_SHADER);
     unsigned int fShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-    glShaderSource(vShader, 1, &vshaderSource, nullptr);
-    glShaderSource(fShader, 1, &fshaderSource, nullptr);
+    glShaderSource(vShader, 1, &vshaderSource, NULL);
+    glShaderSource(fShader, 1, &fshaderSource, NULL);
     glCompileShader(vShader);
 
     checkOpenGLError();
     glGetShaderiv(vShader, GL_COMPILE_STATUS, &vertCompiled);
     if (vertCompiled != 1) {
-        std::cout << "vertex compilation failed" << std::endl;
+        printf("vertex compilation failed\n");
         printShaderLog(vShader);
     }
 
@@ -78,7 +80,7 @@ unsigned int createShaderSource() {
     checkOpenGLError();
     glGetShaderiv(vShader, GL_COMPILE_STATUS, &fragCompiled);
     if (vertCompiled != 1) {
-        std::cout << "fragment compilation failed" << std::endl;
+        printf("fragment compilation failed\n");
         printShaderLog(vShader);
     }
 
@@ -89,7 +91,7 @@ unsigned int createShaderSource() {
     checkOpenGLError();
     glGetProgramiv(vfProgram, GL_LINK_STATUS, &linked);
     if (linked != 1) {
-        std::cout << "linking failed" << std::endl;
+        printf("linking failed\n");
         printProgramLog(vfProgram);
     }
 
