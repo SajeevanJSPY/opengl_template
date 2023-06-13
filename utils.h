@@ -23,8 +23,8 @@ void printProgramLog(int prog) {
     glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &len);
     if (len > 0) {
         log = (char *)malloc(len);
-         glGetProgramInfoLog(prog, len, &chWrittn, log);
-         std::cout << "Program Info Log: " << log << std::endl;
+        glGetProgramInfoLog(prog, len, &chWrittn, log);
+        std::cout << "Program Info Log: " << log << std::endl;
         free(log);
     } 
 }
@@ -34,8 +34,8 @@ bool checkOpenGLError() {
     int glErr = glGetError();
     while (glErr != GL_NO_ERROR) {
         std::cout << "glError: " << glErr << std::endl;
-         foundError = true;
-         glErr = glGetError();
+        foundError = true;
+        glErr = glGetError();
     }
     return foundError;
 }
